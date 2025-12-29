@@ -1,0 +1,149 @@
+<main class="page-wrapper">
+
+  <section class="page-intro">
+    <h1 class="about-title">Contact</h1>
+
+    <div class="terminal-line">
+      <span class="prompt">$</span> cat /contact
+    </div>
+
+    <blockquote class="terminal-quote">
+      "Clear communication is the shortest path between two minds."
+    </blockquote>
+  </section>
+
+  <div class="contact-socials">
+    <a href="https://www.linkedin.com/in/jansari-jiggrr926"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="social-btn">
+      LinkedIn
+    </a>
+
+    <a href="https://github.com/jansari9110"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="social-btn">
+      GitHub
+    </a>
+
+    <a href="mailto:jigarjansari98700@gmail.com"
+       class="social-btn">
+      Email
+    </a>
+  </div>
+
+  <section class="page-content contact-section">
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <div class="info-card">
+          <h3>Email</h3>
+          <p>
+            <a href="mailto:jigarjansari98700@gmail.com">
+              jigarjansari98700@gmail.com
+            </a>
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Location</h3>
+          <p>India</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Availability</h3>
+          <p>Open to projects, internships & collaborations</p>
+        </div>
+      </div>
+
+      <!-- WORKING EMAILJS CONTACT FORM -->
+      <form 
+        class="contact-form" 
+        id="contactForm"
+        autocomplete="off">
+        
+        <div class="field">
+          <input type="text" name="from_name" id="from_name" required />
+          <label>Your Name</label>
+        </div>
+
+        <div class="field">
+          <input type="email" name="reply_to" id="reply_to" required />
+          <label>Email Address</label>
+        </div>
+
+        <div class="field">
+          <textarea rows="5" name="message" id="message" required></textarea>
+          <label>Your Message</label>
+        </div>
+
+        <button type="submit" id="submitBtn">Send Message</button>
+        
+        <div id="result"></div>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+// Initialize EmailJS with your public key
+(function(){
+  // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+  emailjs.init("DnUsR5GWF4z_lxUzA");
+})();
+
+// Handle form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const button = document.getElementById('submitBtn');
+  const result = document.getElementById('result');
+  const originalText = button.textContent;
+  
+  // Update button state
+  button.textContent = 'Sending...';
+  button.disabled = true;
+  result.innerHTML = '';
+  result.className = '';
+
+  // EmailJS service configuration
+  // Replace these with your actual EmailJS service ID and template ID
+  const serviceID = 'service_r3wdlbh';
+  const templateID = 'template_1hwk06r';
+
+  // Send email using EmailJS
+  emailjs.sendForm(serviceID, templateID, this)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      result.innerHTML = '✅ Message sent successfully! I\'ll get back to you soon.';
+      result.className = 'success';
+      document.getElementById('contactForm').reset();
+      button.textContent = originalText;
+      button.disabled = false;
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        result.innerHTML = '';
+        result.className = '';
+      }, 5000);
+    }, function(error) {
+      console.log('FAILED...', error);
+      result.innerHTML = '❌ Failed to send message. Please try again or email me directly.';
+      result.className = 'error';
+      button.textContent = originalText;
+      button.disabled = false;
+      
+      // Clear error message after 7 seconds
+      setTimeout(() => {
+        result.innerHTML = '';
+        result.className = '';
+      }, 7000);
+    });
+});
+</script>
